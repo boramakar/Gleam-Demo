@@ -30,6 +30,11 @@ class GameManager : Singleton<GameManager>
     [BoxGroup("Forces")]
     public float magnetRadius;
 
+    [BoxGroup("Points")]
+    public int scoreThreshold = 2048;
+    [BoxGroup("Points")]
+    public int pointGainPerScore = 1;
+
     [SerializeField, ReadOnly]
     int point;
 
@@ -102,8 +107,8 @@ class GameManager : Singleton<GameManager>
     {
         if (value > maxProducedValue)
             maxProducedValue = value;
-        if (value >= 1024)
-            point++;
+        if (value >= scoreThreshold)
+            point += pointGainPerScore;
     }
 
     public GameObject GetPreview()

@@ -34,7 +34,7 @@ class ThrowablePool : SerializedMonoBehaviour
             var elem = pool[0];
             used.Add(elem);
             pool.RemoveAt(0);
-            obj = elem.GetPrefab();
+            obj = elem.GetGameObject();
         }
 
         obj.SetActive(true);
@@ -61,6 +61,17 @@ class ThrowablePool : SerializedMonoBehaviour
             obj = Instantiate(throwablePrefab, Vector3.zero, Quaternion.identity, transform);
             pool.Add(obj.GetComponent<IThrowable>());
             obj.SetActive(false);
+        }
+    }
+
+    public void ResetPools()
+    {
+        while(used.Count > 0)
+        {
+            var usedThrowable = used[0];
+            usedThrowable.GetGameObject().SetActive(false);
+            used.Remove(usedThrowable);
+            pool.Add(usedThrowable);
         }
     }
 }

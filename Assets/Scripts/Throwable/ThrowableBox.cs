@@ -65,7 +65,7 @@ public class ThrowableBox : SerializedMonoBehaviour, IThrowable
         }
     }
 
-    public GameObject GetPrefab()
+    public GameObject GetGameObject()
     {
         return gameObject;
     }

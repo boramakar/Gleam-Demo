@@ -8,7 +8,7 @@ public interface IThrowable
     public void Throw();
     public void OnTriggerEnter(Collider other);
     public int GetValue();
-    public GameObject GetPrefab();
+    public GameObject GetGameObject();
     public bool IsActive();
     public Vector3 GetVelocity();
     public void LockTransformations();

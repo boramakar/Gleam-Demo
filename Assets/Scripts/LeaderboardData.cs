@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 
-class LeaderboardData
+public class LeaderboardData
 {
     public List<LeaderboardEntry> dailyList;
     public int dailyRank;
+    public int dailyPoints;
     public List<LeaderboardEntry> globalList;
     public int globalRank;
+    public int globalPoints;
 }
 
-class LeaderboardEntry
+public class LeaderboardEntry
 {
     public string name;
     public int points;
     public int rank;
 }
-

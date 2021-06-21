@@ -27,7 +27,15 @@
                     "id": "8a441c10-f374-4ebe-bc0d-ff3f6c081e99",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": "Press(behavior=1)"
+                    "interactions": ""
+                },
+                {
+                    "name": "Delta",
+                    "type": "Value",
+                    "id": "1e23e6e6-9ce7-4db8-b882-69289006bbbb",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -94,6 +102,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Position",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7cc9680a-dd5c-4bdc-b6d8-e2f5abfb24c8",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Delta",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fdaa5b4c-f06d-465d-8913-b49230a5411c",
+                    "path": "<Touchscreen>/primaryTouch/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Delta",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 class NetworkManager : Singleton<NetworkManager>
 {
     [SerializeField]
-    string api;
+    string api = "https://www.gleamgames.com/service/test_case/public/api/v1/";
     [SerializeField]
     string getProfileEndpoint = "user/get/profile";
     [SerializeField]
@@ -24,19 +24,22 @@ class NetworkManager : Singleton<NetworkManager>
         deviceID = SystemInfo.deviceUniqueIdentifier;
     }
 
-    public void Init()
+    public void Init(Action successCallback, Action failCallback)
     {
-        StartCoroutine(_Init());
+        StartCoroutine(_Init(successCallback, failCallback));
     }
 
-    IEnumerator _Init()
+    IEnumerator _Init(Action successCallback, Action failCallback)
     {
-        UnityWebRequest request = UnityWebRequest.Get(api + getProfileEndpoint + "?device_token=" + deviceID);
+        string requestUrl = api + getProfileEndpoint + "?device_token=" + deviceID;
+        Debug.Log("Request: " + requestUrl);
+        UnityWebRequest request = UnityWebRequest.Get(requestUrl);
         yield return request.SendWebRequest();
-
+        Debug.Log("Request return: " + request.result.ToString());
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.Log(request.error);
+            failCallback.Invoke();
         }
         else
         {
@@ -44,6 +47,7 @@ class NetworkManager : Singleton<NetworkManager>
             Debug.Log(request.downloadHandler.text);
 
             //Handle response - nothing to handle
+            successCallback.Invoke();
         }
     }
 

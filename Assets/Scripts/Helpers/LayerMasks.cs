@@ -1,6 +1,6 @@
 ﻿class LayerMasks
 {
-    public static int BoxLayer = 6;
+    public static int ThrowableLayer = 6;
 
-    public static int BoxMask = 1 << BoxLayer;
+    public static int ThrowableMask = 1 << ThrowableLayer;
 }

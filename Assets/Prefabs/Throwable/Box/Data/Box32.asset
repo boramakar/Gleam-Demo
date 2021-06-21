@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eee9aea65d8eb894083d8eab9f039695, type: 3}
+  m_Name: Box32
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  value: 32
+  prefab: {fileID: 5403913460882521231, guid: ec865c5bd869f7a459ed0740432c57d4, type: 3}
+  mesh: {fileID: -5495902117074765545, guid: 510b32c7966ae054da249585a9420487, type: 3}
+  material: {fileID: 2100000, guid: 43e0d2a295ba4794ab972ba40ea53ce5, type: 2}
+  color: {r: 0.91764706, g: 0.72156864, b: 0.36862746, a: 0}
+  fontSize: 7
+  throwForce: 5000
+  jumpForce: 250
+  magnetForce: 100
+  magnetRadius: 4

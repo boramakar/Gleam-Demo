@@ -40,7 +40,15 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""id"": ""8a441c10-f374-4ebe-bc0d-ff3f6c081e99"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
-                    ""interactions"": ""Press(behavior=1)""
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Delta"",
+                    ""type"": ""Value"",
+                    ""id"": ""1e23e6e6-9ce7-4db8-b882-69289006bbbb"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -109,6 +117,28 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""action"": ""Position"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7cc9680a-dd5c-4bdc-b6d8-e2f5abfb24c8"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Delta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fdaa5b4c-f06d-465d-8913-b49230a5411c"",
+                    ""path"": ""<Touchscreen>/primaryTouch/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Delta"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -120,6 +150,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         m_Gameplay_Press = m_Gameplay.FindAction("Press", throwIfNotFound: true);
         m_Gameplay_Release = m_Gameplay.FindAction("Release", throwIfNotFound: true);
         m_Gameplay_Position = m_Gameplay.FindAction("Position", throwIfNotFound: true);
+        m_Gameplay_Delta = m_Gameplay.FindAction("Delta", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -172,6 +203,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Press;
     private readonly InputAction m_Gameplay_Release;
     private readonly InputAction m_Gameplay_Position;
+    private readonly InputAction m_Gameplay_Delta;
     public struct GameplayActions
     {
         private @PlayerInputs m_Wrapper;
@@ -179,6 +211,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         public InputAction @Press => m_Wrapper.m_Gameplay_Press;
         public InputAction @Release => m_Wrapper.m_Gameplay_Release;
         public InputAction @Position => m_Wrapper.m_Gameplay_Position;
+        public InputAction @Delta => m_Wrapper.m_Gameplay_Delta;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -197,6 +230,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Position.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPosition;
                 @Position.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPosition;
                 @Position.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPosition;
+                @Delta.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDelta;
+                @Delta.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDelta;
+                @Delta.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDelta;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -210,6 +246,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Position.started += instance.OnPosition;
                 @Position.performed += instance.OnPosition;
                 @Position.canceled += instance.OnPosition;
+                @Delta.started += instance.OnDelta;
+                @Delta.performed += instance.OnDelta;
+                @Delta.canceled += instance.OnDelta;
             }
         }
     }
@@ -219,5 +258,6 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         void OnPress(InputAction.CallbackContext context);
         void OnRelease(InputAction.CallbackContext context);
         void OnPosition(InputAction.CallbackContext context);
+        void OnDelta(InputAction.CallbackContext context);
     }
 }

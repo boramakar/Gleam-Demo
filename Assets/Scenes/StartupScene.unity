@@ -957,9 +957,10 @@ MonoBehaviour:
   throwablePool: {fileID: 679113536}
   throwForce: 1500
   forceOffset: {x: 0, y: 0, z: 0}
-  jumpForce: 100
-  magnetForce: 10
+  jumpForce: 200
+  magnetForce: 0
   magnetRadius: 3
+  point: 0
 --- !u!4 &1531193704
 Transform:
   m_ObjectHideFlags: 0

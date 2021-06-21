@@ -25,7 +25,7 @@ class NetworkManager : Singleton<NetworkManager>
     {
         deviceID = SystemInfo.deviceUniqueIdentifier;
         uiManager = UIManager.Instance;
-        GameManager.Instance.SessionEndEvent += GetLeaderboard;
+        GameManager.Instance.SessionEndEvent += SubmitScore;
     }
 
     public void Login(Action successCallback, Action failCallback)
@@ -72,25 +72,42 @@ class NetworkManager : Singleton<NetworkManager>
         UnityWebRequest request = UnityWebRequest.Post(api + editProfileEndpoint, formData);
 
         yield return request.SendWebRequest();
+        //Giving feedback to used about his actions would be nice but it requires implementing a proper popup, I don't think it's necessary at this point
+        if(request.result == UnityWebRequest.Result.Success)
+        {
+            //Show success popup
+        }
+        else
+        {
+            //Display error
+            Debug.Log(request.error);
+        }
     }
 
-    public void SubmitScore(int point)
+    public void SubmitScore()
     {
-        StartCoroutine(_SubmitScore(point));
+        StartCoroutine(_SubmitScore());
     }
 
-    IEnumerator _SubmitScore(int? point)
+    IEnumerator _SubmitScore()
     {
         List<IMultipartFormSection> formData = new List<IMultipartFormSection>();
         formData.Add(new MultipartFormDataSection("device_token=" + deviceID));
-        if (point != null)
-            formData.Add(new MultipartFormDataSection("point=" + point));
-        else
-            formData.Add(new MultipartFormDataSection("point=" + 0));
+            formData.Add(new MultipartFormDataSection("point=" + GameManager.Instance.Point));
 
         UnityWebRequest request = UnityWebRequest.Post(api + setPointEndpoint, formData);
 
         yield return request.SendWebRequest();
+        if (request.result == UnityWebRequest.Result.Success)
+        {
+            //Get leaderboard after success to ensure the latest score is present in the leaderboard
+            GetLeaderboard();
+        }
+        else
+        {
+            //Display error
+            Debug.Log(request.error);
+        }
     }
 
     public void GetLeaderboard()

@@ -53,10 +53,10 @@ public class ThrowableBox : SerializedMonoBehaviour, IThrowable
                 //Decide which object to keep and which one to disable
                 if (rb.velocity.magnitude < other.GetComponent<IThrowable>().GetVelocity().magnitude) //Slower object should persist and jump
                 {
-                    //Remove other object
+                    //Remove other object (Merge)
                     other.gameObject.SetActive(false);
                     gameManager.ReturnThrowable(other.gameObject);
-                    //Merge and Jump
+                    //Jump
                     rb.AddForce(Vector3.up * gameManager.jumpForce);
                     rb.AddForce(Vector3.forward * gameManager.magnetForce);
                     //Update max value in case the product is the new highest

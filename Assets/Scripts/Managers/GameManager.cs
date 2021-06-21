@@ -33,6 +33,12 @@ class GameManager : Singleton<GameManager>
     [SerializeField, ReadOnly]
     int point;
 
+    public int Point
+    {
+        get => point;
+        private set => point = value;
+    }
+
     //InputManager inputManager; //Doesn't require initialization
     NetworkManager networkManager;
     UIManager uiManager;
@@ -96,6 +102,8 @@ class GameManager : Singleton<GameManager>
     {
         if (value > maxProducedValue)
             maxProducedValue = value;
+        if (value >= 1024)
+            point++;
     }
 
     public GameObject GetPreview()
@@ -132,5 +140,6 @@ class GameManager : Singleton<GameManager>
     {
         throwablePool.ResetPools();
         point = 0;
+        maxProducedValue = startingValue;
     }
 }

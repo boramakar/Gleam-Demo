@@ -19,23 +19,25 @@ class NetworkManager : Singleton<NetworkManager>
 
     string deviceID;
 
+    UIManager uiManager;
+
     private void Awake()
     {
         deviceID = SystemInfo.deviceUniqueIdentifier;
+        uiManager = UIManager.Instance;
+        GameManager.Instance.SessionEndEvent += GetLeaderboard;
     }
 
-    public void Init(Action successCallback, Action failCallback)
+    public void Login(Action successCallback, Action failCallback)
     {
-        StartCoroutine(_Init(successCallback, failCallback));
+        StartCoroutine(_Login(successCallback, failCallback));
     }
 
-    IEnumerator _Init(Action successCallback, Action failCallback)
+    IEnumerator _Login(Action successCallback, Action failCallback)
     {
         string requestUrl = api + getProfileEndpoint + "?device_token=" + deviceID;
-        Debug.Log("Request: " + requestUrl);
         UnityWebRequest request = UnityWebRequest.Get(requestUrl);
         yield return request.SendWebRequest();
-        Debug.Log("Request return: " + request.result.ToString());
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.Log(request.error);
@@ -83,6 +85,8 @@ class NetworkManager : Singleton<NetworkManager>
         formData.Add(new MultipartFormDataSection("device_token=" + deviceID));
         if (point != null)
             formData.Add(new MultipartFormDataSection("point=" + point));
+        else
+            formData.Add(new MultipartFormDataSection("point=" + 0));
 
         UnityWebRequest request = UnityWebRequest.Post(api + editProfileEndpoint, formData);
 
@@ -91,6 +95,7 @@ class NetworkManager : Singleton<NetworkManager>
 
     public void GetLeaderboard()
     {
+        Debug.Log("GetLeaderboard");
         StartCoroutine(_GetLeaderboard());
     }
 
@@ -98,5 +103,19 @@ class NetworkManager : Singleton<NetworkManager>
     {
         UnityWebRequest request = UnityWebRequest.Get(api + getProfileEndpoint + "?device_token=" + deviceID);
         yield return request.SendWebRequest();
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(request.error);
+            uiManager.DisplayError("Network Error", "Could not retrieve leaderboard data");
+        }
+        else
+        {
+            // Show results as text
+            Debug.Log(request.downloadHandler.text);
+            //Generate Leaderboard Data from response
+            LeaderboardData data = JsonUtility.FromJson<LeaderboardData>(request.downloadHandler.text);
+            //Handle response - nothing to handle
+            uiManager.DisplayLeaderboards(data);
+        }
     }
 }

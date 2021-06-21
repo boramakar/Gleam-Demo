@@ -33,12 +33,11 @@ public class PlayerScript : SerializedMonoBehaviour
         objectPreview = Instantiate(gameManager.GetPreview(), transform);
         previewScript = objectPreview.GetComponent<IThrowable>();
         previewScript.LockTransformations();
-        currentData = gameManager.GetThrowableData();
-        UpdateThrowable(currentData);
+        gameManager.SessionEndEvent += EndSession;
+        gameManager.RestartEvent += Restart;
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         Init();
     }
@@ -57,6 +56,7 @@ public class PlayerScript : SerializedMonoBehaviour
 
     void FirstRelease()
     {
+        Debug.Log("FirstRelease");
         gameManager.StartTimer();
         inputManager.UnsubscribeRelease(FirstRelease);
     }
@@ -68,6 +68,9 @@ public class PlayerScript : SerializedMonoBehaviour
         {
             var inputDelta = inputManager.GetDelta();
             transform.Translate(new Vector3(inputDelta.x * maxMovementPerFrame * Time.deltaTime, 0, 0));
+            //This is hardcoded based on box, needs to be calculated as (platform.meshCollider.Bounds.extents.x - platform.boxCollider.Bounds.size.x - throwable.meshCollider.Bounds.extents.x)
+            //Not too hard to fix but dealing with potential issues just to fix this is too much work for this project given my time limits
+            transform.position = new Vector3(Mathf.Clamp(transform.position.x, -3.25f, 3.25f), transform.position.y, transform.position.z);
         }
     }
 
@@ -129,16 +132,16 @@ public class PlayerScript : SerializedMonoBehaviour
     void EndSession()
     {
         inputManager.UnsubscribePress(OnPress);
-        inputManager.UnsubscribePress(OnRelease);
+        inputManager.UnsubscribeRelease(OnRelease);
     }
 
     private void Init()
     {
+        currentData = gameManager.GetThrowableData();
         inputManager.SubscribePress(OnPress);
         inputManager.SubscribeRelease(OnRelease);
         inputManager.SubscribeRelease(FirstRelease);
-        gameManager.SessionEndEvent += EndSession;
-        gameManager.RestartEvent += Restart;
+        UpdateThrowable(currentData);
     }
 
     public void Restart()

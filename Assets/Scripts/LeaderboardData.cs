@@ -1,18 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
+[Serializable]
 public class LeaderboardData
 {
-    public List<LeaderboardEntry> dailyList;
-    public int dailyRank;
-    public int dailyPoints;
-    public List<LeaderboardEntry> globalList;
-    public int globalRank;
-    public int globalPoints;
+    public string status;
+    public UserEntry current_user;
+    public List<LeaderboardEntry> users_all_data;
+    public List<LeaderboardEntry> users_daily_data;
 }
 
+[Serializable]
 public class LeaderboardEntry
 {
     public string name;
     public int points;
     public int rank;
+}
+
+[Serializable]
+public class UserEntry
+{
+    public string name;
+    public int monthly_point;
+    public int point;
+    public int general_sort;
+    public int daily_sort;
 }

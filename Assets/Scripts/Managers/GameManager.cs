@@ -47,7 +47,7 @@ class GameManager : Singleton<GameManager>
 
     private void Start()
     {
-        networkManager.Init(InitializeSystems, DisplayNetworkError);
+        networkManager.Login(InitializeSystems, DisplayNetworkError);
     }
 
     void InitializeSystems()
@@ -97,6 +97,7 @@ class GameManager : Singleton<GameManager>
 
     public void StartTimer()
     {
+        Debug.Log("StartTimer");
         StartCoroutine(SessionTimer());
     }
 
@@ -108,6 +109,7 @@ class GameManager : Singleton<GameManager>
 
     void EndSession()
     {
+        Debug.Log("SessionEnd");
         if (SessionEndEvent != null)
             SessionEndEvent();
     }

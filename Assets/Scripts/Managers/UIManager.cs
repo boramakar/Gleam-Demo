@@ -7,11 +7,17 @@ using TMPro;
 
 class UIManager : Singleton<UIManager>
 {
+    [SerializeField]
     IUISCript uiScript;
+    GameManager gameManager;
+    NetworkManager networkManager;
 
     private void Awake()
     {
+        gameManager = GameManager.Instance;
+        networkManager = NetworkManager.Instance;
         transform.GetChild(0).GetComponent<IUISCript>();
+        gameManager.RestartEvent += Restart;
     }
 
     public void DisplayError(string title, string message)
@@ -22,5 +28,10 @@ class UIManager : Singleton<UIManager>
     public void DisplayLeaderboards(LeaderboardData data)
     {
         uiScript.DisplayLeaderboards(data);
+    }
+
+    void Restart()
+    {
+        uiScript.Restart();
     }
 }

@@ -52,8 +52,6 @@ MonoBehaviour:
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes: []
-  throwForce: 1
-  forceOffset: {x: 0, y: 0, z: 0}
   maxMovementPerFrame: 1.5
   zoomInDuration: 0.5
   waitAfterThrowDuration: 0.5

@@ -74,9 +74,12 @@ class GameManager : Singleton<GameManager>
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    public ThrowableData GetThrowableData()
+    public ThrowableData GetThrowableData(int? value)
     {
-        return throwableGenerator.GenerateThrowable(startingValue, maxProducedValue);
+        if (value == null)
+            return throwableGenerator.GenerateThrowable(startingValue, maxProducedValue);
+        else
+            return throwableGenerator.GenerateThrowable(value.Value, value.Value);
     }
 
     public GameObject GetThrowable()
@@ -121,7 +124,7 @@ class GameManager : Singleton<GameManager>
 
     public void Restart()
     {
-        if(RestartEvent != null)
+        if (RestartEvent != null)
             RestartEvent();
     }
 

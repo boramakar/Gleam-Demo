@@ -7,7 +7,7 @@ using TMPro;
 public class ThrowableBox : SerializedMonoBehaviour, IThrowable
 {
     ThrowableData currentData;
-    Material material;
+    MeshRenderer meshRenderer;
 
     Rigidbody rb;
 
@@ -17,7 +17,7 @@ public class ThrowableBox : SerializedMonoBehaviour, IThrowable
     {
         rb = gameObject.GetComponent<Rigidbody>();
         gameManager = GameManager.Instance;
-        material = gameObject.GetComponent<MeshRenderer>().material;
+        meshRenderer = gameObject.GetComponent<MeshRenderer>();
     }
 
     public void UpdateData(ThrowableData data)
@@ -29,8 +29,8 @@ public class ThrowableBox : SerializedMonoBehaviour, IThrowable
             textMesh.text = data.value.ToString();
             textMesh.fontSize = data.fontSize;
         }
-        material = data.material;
-        material.color = data.color;
+        meshRenderer.material = data.material;
+        meshRenderer.material.color = data.color;
     }
 
     public void Throw()
@@ -53,13 +53,17 @@ public class ThrowableBox : SerializedMonoBehaviour, IThrowable
                 //Decide which object to keep and which one to disable
                 if (rb.velocity.magnitude < other.GetComponent<IThrowable>().GetVelocity().magnitude) //Slower object should persist and jump
                 {
+                    //Remove other object
+                    other.gameObject.SetActive(false);
+                    gameManager.ReturnThrowable(other.gameObject);
+                    //Merge and Jump
                     rb.AddForce(Vector3.up * gameManager.jumpForce);
                     rb.AddForce(Vector3.forward * gameManager.magnetForce);
-                    //Merge and Jump
-                }
-                else
-                {
-                    gameManager.ReturnThrowable(gameObject);
+                    //Update max value in case the product is the new highest
+                    int newValue = currentData.value * 2;
+                    gameManager.UpdateMaxProducedValue(newValue);
+                    //Update visuals to new value
+                    UpdateData(gameManager.GetThrowableData(newValue));
                 }
             }
         }

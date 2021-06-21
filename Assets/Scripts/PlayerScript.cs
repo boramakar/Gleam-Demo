@@ -90,7 +90,7 @@ public class PlayerScript : SerializedMonoBehaviour
     IEnumerator PrepareNextThrowable()
     {
         yield return new WaitForSeconds(waitAfterThrowDuration);
-        UpdateThrowable(GameManager.Instance.GetThrowableData());
+        UpdateThrowable(GameManager.Instance.GetThrowableData(null));
     }
 
     void UpdateThrowable(ThrowableData data)
@@ -137,7 +137,7 @@ public class PlayerScript : SerializedMonoBehaviour
 
     private void Init()
     {
-        currentData = gameManager.GetThrowableData();
+        currentData = gameManager.GetThrowableData(null);
         inputManager.SubscribePress(OnPress);
         inputManager.SubscribeRelease(OnRelease);
         inputManager.SubscribeRelease(FirstRelease);

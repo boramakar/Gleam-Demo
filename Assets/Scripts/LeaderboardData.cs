@@ -14,8 +14,8 @@ public class LeaderboardData
 public class LeaderboardEntry
 {
     public string name;
-    public int points;
-    public int rank;
+    public int point;
+    public int sort;
 }
 
 [Serializable]

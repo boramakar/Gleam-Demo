@@ -30,6 +30,9 @@ class GameManager : Singleton<GameManager>
     [BoxGroup("Forces")]
     public float magnetRadius;
 
+    [SerializeField, ReadOnly]
+    int point;
+
     //InputManager inputManager; //Doesn't require initialization
     NetworkManager networkManager;
     UIManager uiManager;
@@ -43,6 +46,8 @@ class GameManager : Singleton<GameManager>
         networkManager = NetworkManager.Instance;
         uiManager = UIManager.Instance;
         maxProducedValue = startingValue;
+        RestartEvent += ResetGameState;
+        point = 0;
     }
 
     private void Start()
@@ -118,5 +123,11 @@ class GameManager : Singleton<GameManager>
     {
         if(RestartEvent != null)
             RestartEvent();
+    }
+
+    void ResetGameState()
+    {
+        throwablePool.ResetPools();
+        point = 0;
     }
 }

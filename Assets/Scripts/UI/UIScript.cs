@@ -30,20 +30,20 @@ class UIScript : SerializedMonoBehaviour, IUISCript
         errorDisplay.SetActive(false);
         for(int i = 0; i < 10; i++)
         {
-            globalLeaderboardContent.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text = "#" + data.users_all_data[i].rank;
-            globalLeaderboardContent.GetChild(i).GetChild(1).GetComponent<TextMeshProUGUI>().text = data.users_all_data[i].points.ToString();
-            globalLeaderboardContent.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = data.users_all_data[i].name;
-            dailyLeaderboardContent.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text = "#" + data.users_daily_data[i].rank;
-            dailyLeaderboardContent.GetChild(i).GetChild(1).GetComponent<TextMeshProUGUI>().text = data.users_daily_data[i].points.ToString();
-            dailyLeaderboardContent.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = data.users_daily_data[i].name;
+            globalLeaderboardContent.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text = "#" + data.users_all_data[i].sort;
+            globalLeaderboardContent.GetChild(i).GetChild(1).GetComponent<TextMeshProUGUI>().text = data.users_all_data[i].name;
+            globalLeaderboardContent.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = data.users_all_data[i].point.ToString();
+            dailyLeaderboardContent.GetChild(i).GetChild(0).GetComponent<TextMeshProUGUI>().text = "#" + data.users_daily_data[i].sort;
+            dailyLeaderboardContent.GetChild(i).GetChild(1).GetComponent<TextMeshProUGUI>().text = data.users_daily_data[i].name;
+            dailyLeaderboardContent.GetChild(i).GetChild(2).GetComponent<TextMeshProUGUI>().text = data.users_daily_data[i].point.ToString();
         }
 
         globalLeaderboardContent.GetChild(10).GetChild(0).GetComponent<TextMeshProUGUI>().text = "#" + data.current_user.general_sort;
-        globalLeaderboardContent.GetChild(10).GetChild(1).GetComponent<TextMeshProUGUI>().text = data.current_user.point.ToString();
-        globalLeaderboardContent.GetChild(10).GetChild(2).GetComponent<TextMeshProUGUI>().text = data.current_user.name;
+        globalLeaderboardContent.GetChild(10).GetChild(1).GetComponent<TextMeshProUGUI>().text = data.current_user.name;
+        globalLeaderboardContent.GetChild(10).GetChild(2).GetComponent<TextMeshProUGUI>().text = data.current_user.point.ToString();
         dailyLeaderboardContent.GetChild(10).GetChild(0).GetComponent<TextMeshProUGUI>().text = "#" + data.current_user.daily_sort;
-        dailyLeaderboardContent.GetChild(10).GetChild(1).GetComponent<TextMeshProUGUI>().text = data.current_user.monthly_point.ToString();
-        dailyLeaderboardContent.GetChild(10).GetChild(2).GetComponent<TextMeshProUGUI>().text = data.current_user.name;
+        dailyLeaderboardContent.GetChild(10).GetChild(1).GetComponent<TextMeshProUGUI>().text = data.current_user.name;
+        dailyLeaderboardContent.GetChild(10).GetChild(2).GetComponent<TextMeshProUGUI>().text = data.current_user.monthly_point.ToString();
 
     }
 

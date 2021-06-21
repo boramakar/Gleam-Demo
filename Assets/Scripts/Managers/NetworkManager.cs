@@ -88,7 +88,7 @@ class NetworkManager : Singleton<NetworkManager>
         else
             formData.Add(new MultipartFormDataSection("point=" + 0));
 
-        UnityWebRequest request = UnityWebRequest.Post(api + editProfileEndpoint, formData);
+        UnityWebRequest request = UnityWebRequest.Post(api + setPointEndpoint, formData);
 
         yield return request.SendWebRequest();
     }
@@ -101,7 +101,7 @@ class NetworkManager : Singleton<NetworkManager>
 
     IEnumerator _GetLeaderboard()
     {
-        UnityWebRequest request = UnityWebRequest.Get(api + getProfileEndpoint + "?device_token=" + deviceID);
+        UnityWebRequest request = UnityWebRequest.Get(api + getListEndpoint + "?device_token=" + deviceID);
         yield return request.SendWebRequest();
         if (request.result != UnityWebRequest.Result.Success)
         {
